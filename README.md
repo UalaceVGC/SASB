@@ -1,4 +1,4 @@
-💇‍♀️ Belleza Pura: Sistema de Agendamento para Salões de Beleza (SASB)
+===💇‍♀️ Belleza Pura: Sistema de Agendamento para Salões de Beleza (SASB)===
 
 Desenvolvida para atender um desafio proposto em uma vaga para Desenvolvedor Junior Django
 
@@ -11,11 +11,11 @@ Passo a Passo:
 ✅ Faça as migrations corretamente para o Banco de dados e por ultimo, inicie o Runserver.
 
 
-✨ Simplifique a Gestão do seu Salão com Inteligência e Facilidade!
+==✨ Simplifique a Gestão do seu Salão com Inteligência e Facilidade!==
 
 O Belleza Pura é a solução definitiva para proprietários de salões de beleza, barbearias e spas que buscam otimizar a gestão e focar no que realmente importa: a experiência do cliente. Nossa plataforma foi desenvolvida para ser intuitiva e completa, centralizando todas as operações em um único lugar, desde o agendamento de horários até a análise de resultados.
 
-🚀 Principais Módulos e Funcionalidades 🚀
+===🚀 Principais Módulos e Funcionalidades 🚀===
 
 📈 Dashboard de Performance
 Tenha o controle total do seu negócio em uma única tela. Nosso dashboard oferece uma visão geral em tempo real, exibindo métricas essenciais como o total de clientes , funcionários , serviços e agendamentos pendentes. Tome decisões estratégicas com informações precisas na ponta dos seus dedos.
