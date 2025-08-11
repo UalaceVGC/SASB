@@ -10,9 +10,7 @@ Passo a Passo:
 
 ✅ Faça as migrations corretamente para o Banco de dados e por ultimo, inicie o Runserver.
 
-====================================================================
-=================================SASB===============================
-====================================================================
+
 ✨ Simplifique a Gestão do seu Salão com Inteligência e Facilidade!
 
 O Belleza Pura é a solução definitiva para proprietários de salões de beleza, barbearias e spas que buscam otimizar a gestão e focar no que realmente importa: a experiência do cliente. Nossa plataforma foi desenvolvida para ser intuitiva e completa, centralizando todas as operações em um único lugar, desde o agendamento de horários até a análise de resultados.
