@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="{% static 'css/agendamento-status.css' %}">
+    <link rel="icon" href="static/img/icon_salao.jpg" sizes="32x32" type="image/png">
+    <title>Agendamento - Modificar Status</title>
+
+</head>
+<body>
+<div class="container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fas fa-cut"></i>
+            <span>Belleza Pura</span>
+        </div>
+        <nav class="nav">
+            <a href="{% url 'home' %}"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+            <a href="{% url 'agendamentos' %}"><i class="fas fa-chart-line"></i> <span>Horarios</span></a>
+            <a href="{% url 'clientes' %}"><i class="fas fa-user"></i> <span>Clientes</span></a>
+            <a href="{% url 'equipe' %}"><i class="fas fa-users"></i> <span>Funcionários</span></a>
+            <a href="{% url 'servicos' %}"><i class="fas fa-scissors"></i> <span>Serviços</span></a>
+            <a href="{% url 'relatorio' %}"><i class="fas fa-chart-line"></i> <span>Relatórios</span></a>
+        </nav>
+                <a href="https://github.com/UalaceVGC" class="logout"><i class="fas fa-sign-out-alt"></i><img width="50" height="50" src="https://img.icons8.com/material-outlined/24/github.png" alt="github"/></a>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content">
+        <div class="window-all">
+            <div class="form-container">
+                <div class="window-title">
+                    <h1>Modificar Status</h1>
+                    <p>Altere o status do agendamento conforme necessário.</p>
+                </div>
+                <h2>Dados do agendamento</h2>
+                <p>Você está modificando o status do agendamento de <strong>{{ agendamento.cliente_nome }}</strong>.</p>
+                <p>Profissional: <strong>{{ agendamento.profissional }}</strong></p>
+                <p>Serviço: <strong>{{ agendamento.servico.nome }}</strong></p>
+                <p>Data: <strong>{{ agendamento.data }}</strong></p>
+                <p>Horário: <strong>{{ agendamento.horario }}</strong></p>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="status">Selecione o novo status:</label>
+                        <select name="status" id="status" required>
+                            <option value="Agendado" {% if agendamento.status == 'Agendado' %}selected{% endif %}>Agendado</option>
+                            <option value="Concluido" {% if agendamento.status == 'Concluido' %}selected{% endif %}>Concluído</option>
+                            <option value="Cancelado" {% if agendamento.status == 'Cancelado' %}selected{% endif %}>Cancelado</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Modificar Status</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    </div>
+</body>
+</html>

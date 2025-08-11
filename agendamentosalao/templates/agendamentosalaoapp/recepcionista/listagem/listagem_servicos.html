@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Lista de Serviços - Belleza Pura</title>
+    <link rel="icon" href="static/img/icon_salao.jpg" sizes="32x32" type="image/png">
+    <link rel="stylesheet" href="{% static 'css/listagem.css' %}">
+    <script src="{% static 'js/confirmar_exclusao.js' %}"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a2d9d6a32e.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+</head>
+<body>
+
+<div class="container">
+  <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fas fa-cut"></i>
+            <span>Belleza Pura</span>
+        </div>
+        <nav class="nav">
+            <a href="{% url 'home' %}"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+            <a href="{% url 'agendamentos' %}"><i class="fas fa-chart-line"></i> <span>Horarios</span></a>
+            <a href="{% url 'clientes' %}"><i class="fas fa-user"></i> <span>Clientes</span></a>
+            <a href="{% url 'equipe' %}"><i class="fas fa-users"></i> <span>Funcionários</span></a>
+            <a href="{% url 'servicos' %}"><i class="fas fa-scissors"></i> <span>Serviços</span></a>
+            <a href="{% url 'relatorio' %}"><i class="fas fa-chart-line"></i> <span>Relatórios</span></a>
+        </nav>
+        <a href="https://github.com/UalaceVGC" class="logout"><i class="fas fa-sign-out-alt"></i><img width="50" height="50" src="https://img.icons8.com/material-outlined/24/github.png" alt="github"/></a>    </aside>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content">
+        <div class="hero">
+            <h1>Lista de <span>Serviços</span></h1>
+            <p>Gerencie todos os serviços cadastrados no sistema.</p>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <section class="cards">
+        <div class="card" style="flex: 1 1 100%;">
+            <div class="pesquisa-add">
+                <a href="{% url 'cadastrar_servico' %}" class="btn-adicionar">Adicionar Serviço</a>
+                <form method="get" class="search-form">
+                    {% csrf_token %}
+                    <input type="text" name="pesquisar" placeholder="Pesquisar" onkeyup="searchTable()">
+                    <button class="btn-pesquisar" >Pesquisar</button>
+                </form>
+            </div>
+            <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Descricao</th>
+                    <th>Duração</th>
+                    <th>Preço</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Exemplo de iteração sobre clientes -->
+                
+
+                {% for servicos in servicos %}
+                <tr>
+                    <td>{{ servicos.id }}</td>
+                    <td>{{ servicos.nome }}</td>
+                    <td>{{ servicos.descricao }}</td>
+                    <td>{{ servicos.duracao }}</td>
+                    <td>R${{ servicos.preco }}</td>
+                    <td class="acoes"> 
+                        <a href="{% url 'editar_servico' servicos.id %}"><img width="25" height="25" src="https://img.icons8.com/fluency-systems-regular/48/edit-user.png" alt="edit-user"/></a> 
+                        <a href="{% url 'deletar_servico' servicos.id %}" 
+                        class="btn-delete" 
+                        data-url="{% url 'deletar_servico' servicos.id %}">
+                            <img width="25" height="25" 
+                                src="https://img.icons8.com/ios-filled/50/full-trash--v1.png" 
+                                alt="Excluir"/>
+                        </a>
+
+                    </td>
+                </tr>
+                    {% empty %}
+                <tr>
+                    <td>1</td>
+                    <td>Luzes</td>
+                    <td>Aplicação de luzes no cabelo</td>
+                    <td>2H</td>
+                    <td>R$120,00</td>
+                    <td class="acoes"> 
+                        <a href="#"><img width="25" height="25" src="https://img.icons8.com/fluency-systems-regular/48/edit-user.png" alt="edit-user"/></a> 
+                        <a href="#"><img width="25" height="25" src="https://img.icons8.com/ios-filled/50/full-trash--v1.png" alt="full-trash--v1"/></a>
+                        <a href="#"><img width="25" height="25" src="https://img.icons8.com/ios/50/comments--v1.png" alt="comments--v1"/></a>
+                    </td>
+                </tr>
+                {% endfor %}                    
+            </tbody>
+            </table>
+        </div>
+        <div class='url-paginacao'>  
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Próxima">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                {% endif %}
+            </ul>
+        <div>
+        </section>
+    </main>
+</div>
+
+</body>
+</html>
+

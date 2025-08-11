@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Serviços Concluídos - Belleza Pura</title>
+    <link rel="stylesheet" href="{% static 'css/relatorio.css' %}" />
+    <link rel="icon" href="static/img/icon_salao.jpg" sizes="32x32" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a2d9d6a32e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <main>
+        <div class="container">
+            <!-- Menu lateral -->
+            <aside class="sidebar">
+                <div class="logo">
+                    <i class="fas fa-cut"></i>
+                    <span>Belleza Pura</span>
+                </div>
+                <nav class="nav">
+                    <a href="{% url 'home' %}"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+                    <a href="{% url 'agendamentos' %}"><i class="fas fa-calendar-alt"></i> <span>Horarios</span></a>
+                    <a href="{% url 'clientes' %}"><i class="fas fa-user"></i> <span>Clientes</span></a>
+                    <a href="{% url 'equipe' %}"><i class="fas fa-users"></i> <span>Funcionários</span></a>
+                    <a href="{% url 'servicos' %}"><i class="fas fa-scissors"></i> <span>Serviços</span></a>
+                    <a href="{% url 'relatorio' %}"><i class="fas fa-chart-line"></i> <span>Relatórios</span></a>
+                </nav>
+                        <a href="https://github.com/UalaceVGC" class="logout"><i class="fas fa-sign-out-alt"></i><img width="50" height="50" src="https://img.icons8.com/material-outlined/24/github.png" alt="github"/></a>
+            </aside>
+
+            <!-- Conteúdo principal -->
+            <main class="main-content">
+                <div class="hero">
+                    <h1>Relatório de<br><span>Serviços Concluídos</span></h1>
+                    <p>Selecione um período para visualizar o total de serviços finalizados.</p>
+                </div>
+
+                <!-- Formulário de filtro -->
+                <section class="filter-section">
+                    <form method="GET" class="filter-form">
+                        <label for="data_inicio">Data início:</label>
+                        <input type="date" id="data_inicio" name="data_inicio" value="{{ request.GET.data_inicio }}">
+
+                        <label for="data_fim">Data fim:</label>
+                        <input type="date" id="data_fim" name="data_fim" value="{{ request.GET.data_fim }}">
+
+                        <button type="submit" class="btn-primary">Gerar Relatório</button>
+                        {% if total_concluidos is not None %}
+                            <button type="button" class="btn-secondary" onclick="window.print()">Imprimir</button>
+                        {% endif %}
+                    </form>
+                </section>
+
+                <!-- Card com resultado -->
+                {% if total_concluidos is not None %}
+                <section class="result-section">
+                    <div class="result-card">
+                        <h3>Total de Serviços Concluídos</h3>
+                        <p class="total-number">{{ total_concluidos }}</p>
+                    </div>
+                </section>
+                {% endif %}
+
+                <!-- Lista de serviços concluídos -->
+                {% if servicos_concluidos %}
+                <section class="table-section">
+                    <div class="tabela-scroll">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Serviço</th>
+                                    <th>Profissional</th>
+                                    <th>Data</th>
+                                    <th>Horário</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for s in servicos_concluidos %}
+                                <tr>
+                                    <td>{{ s.cliente_nome }}</td>
+                                    <td>{{ s.servico.nome }}</td>
+                                    <td>{{ s.profissional.nome }}</td>
+                                    <td>{{ s.data|date:"d/m/Y" }}</td>
+                                    <td>{{ s.horario }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                {% endif %}
+            </main>
+        </div>
+    </main>
+</body>
+</html>

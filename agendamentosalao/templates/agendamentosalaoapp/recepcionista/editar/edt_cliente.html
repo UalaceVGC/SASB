@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="{% static 'css/cadastro.css' %}">
+    <link rel="icon" href="static/img/icon_salao.jpg" sizes="32x32" type="image/png">
+    <title>Editar de Cliente - Belleza Pura</title>
+</head>
+<body>
+<div class="container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <i class="fas fa-cut"></i>
+            <span>Belleza Pura</span>  
+        </div>
+        <nav class="nav">
+            <a href="{% url 'home' %}"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+            <a href="{% url 'agendamentos' %}"><i class="fas fa-chart-line"></i> <span>Horarios</span></a>
+            <a href="{% url 'clientes' %}"><i class="fas fa-user"></i> <span>Clientes</span></a>
+            <a href="{% url 'equipe' %}"><i class="fas fa-users"></i> <span>Funcionários</span></a>
+            <a href="{% url 'servicos' %}"><i class="fas fa-scissors"></i> <span>Serviços</span></a>
+            <a href="#"><i class="fas fa-chart-line"></i> <span>Relatórios</span></a>
+        </nav>
+        <a href="#" class="logout"><i class="fas fa-sign-out-alt"></i>Sair</a>
+
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content">
+        <div class="window-all">
+                <div class="form-container">
+                    <div class="window-title">
+                        <h1>Cadastrar Cliente</h1>
+                        <p>Preencha os campos abaixo para cadastrar no dados do usuário.</p>
+                    </div>
+
+                    <div>
+                        {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+
+                    
+                    <h2>Dados do Usuário</h2>
+                    
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group mb-3">
+                            <label for="nome_completo">Nome Completo:</label>
+                            <input type="text" class="form-control" id="nome" name="nome" value="{{cliente.nome}}" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{cliente.email}}" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="telefone">telefone:</label>
+                            <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="(xx) xxxxx-xxxx" pattern="\(\d{2}\) \d{5}-\d{4}" value="{{cliente.telefone}}" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </form>
+                </div>    
+            </div>
+        </div>
+    </main>
+</body>
+</html>

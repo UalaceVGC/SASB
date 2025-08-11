@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="icon" href="static/img/icon_salao.jpg" sizes="32x32" type="image/png">
+    <title>Lista de horarios - Belleza Pura</title>
+    <link rel="stylesheet" href="{% static 'css/listagem.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a2d9d6a32e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container">
+  <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fas fa-cut"></i>
+            <span>Belleza Pura</span>
+        </div>
+        <nav class="nav">
+            <a href="{% url 'home' %}"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+            <a href="{% url 'agendamentos' %}"><i class="fas fa-chart-line"></i> <span>Horarios</span></a>
+            <a href="{% url 'clientes' %}"><i class="fas fa-user"></i> <span>Clientes</span></a>
+            <a href="{% url 'equipe' %}"><i class="fas fa-users"></i> <span>Funcionários</span></a>
+            <a href="{% url 'servicos' %}"><i class="fas fa-scissors"></i> <span>Serviços</span></a>
+            <a href="{% url 'relatorio' %}"><i class="fas fa-chart-line"></i> <span>Relatórios</span></a>
+        </nav>
+                <a href="https://github.com/UalaceVGC" class="logout"><i class="fas fa-sign-out-alt"></i><img width="50" height="50" src="https://img.icons8.com/material-outlined/24/github.png" alt="github"/></a>
+    </aside>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content">
+
+        <div class="hero">
+            <h1>Agenda de <span>Hoje</span></h1>
+            <p>Veja todas as marcações do dia e altere o status conforme necessário.</p>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <section class="cards">
+        <div class="card" style="flex: 1 1 100%;">
+            <div class="pesquisa-add">
+                <a href="{% url 'marcar_horario' %}" class="btn-adicionar">Marcar Horario</a>
+                <form method="get" class="search-form">
+                    {% csrf_token %}
+                    <input type="date" name="data" value="{{ data|date:'Y-m-d' }}" onkeyup="searchTable()">
+                    <button class="btn-pesquisar" >Filtrar por Data</button>
+                </form>
+                <form method="get" class="search-form">
+                    {% csrf_token %}
+                    <input type="text" name="pesquisar" placeholder="Pesquisar" onkeyup="searchTable()">
+                    <button class="btn-pesquisar" >Pesquisar</button>
+
+                </form>
+
+            </div>  
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Telefone P/ Contato</th>
+                        <th>Profissional</th>
+                        <th>Serviço</th>
+                        <th>Data</th>
+                        <th>Horário</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Exemplo de iteração sobre clientes -->
+                    {% for agendamentos in agendamentos %}
+                    <tr>
+                        <td>{{ agendamentos.cliente_nome }}</td>
+                        <td>{{ agendamentos.cliente_telefone }}</td>
+                        <td>{{ agendamentos.profissional }}</td>
+                        <td>{{ agendamentos.servico }}</td>
+                        <td>{{ agendamentos.data }}</td>
+                        <td>{{ agendamentos.horario }}</td>
+                        {% if agendamentos.status == "Agendado" %}
+                            <td style="background-color: Orange; color:white;">{{ agendamentos.status }}</td>
+                        {% elif agendamentos.status == "Concluido" %}
+                            <td style="background-color: Green;  color:white;">{{ agendamentos.status }}</td>
+                        {% elif agendamentos.status == "Cancelado" %}
+                            <td style="background-color: Red;    color:white;">{{ agendamentos.status }}</td>
+                        {% endif %}
+                        
+                        <td class="acoes"> 
+                            <a href="{% url 'modificar_status' agendamentos.id %}"><img width="25" height="25" src="https://img.icons8.com/ios-filled/50/checkmark.png" alt="checkmark"/></a>
+                            <a href="{% url 'editar_agendamento' agendamentos.id %}"><img width="25" height="25" src="https://img.icons8.com/fluency-systems-regular/48/edit-user.png" alt="edit-user"/></a> 
+                            <a href="{% url 'deletar_agendamento' agendamentos.id %}"><img width="25" height="25" src="https://img.icons8.com/ios-filled/50/full-trash--v1.png" alt="full-trash--v1"/></a>
+                        </td>
+                    </tr>
+                        {% empty %}
+                    <tr>
+                        <td colspan="6" style="text-align:center;">Nenhum agendamento para hoje.</td>
+                    </tr>
+                    {% endfor %}
+                        
+                </tbody>
+            </table>
+        </div>
+        
+        </section>
+        <div class='url-paginacao'>  
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Próxima">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                {% endif %}
+            </ul>
+        <div>
+    </main>
+</div>
+
+</body>
+</html>

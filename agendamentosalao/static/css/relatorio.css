@@ -1,0 +1,296 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #d42cc4, #ee8fe4);
+    color: #fff;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 240px;
+    background: #d42cc4;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.logo {
+    font-size: 1.5rem;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+.nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+.nav a:hover {
+    background-color: #fefefe;
+    color: #111;
+}
+
+.logout {
+    color: #ffffff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    margin-top: 40px;
+}
+/* AQUI É O MAIN CONTENT PRINCIPAL*/
+.main-content {
+    flex: 1;
+    padding: 50px;
+    background-image: url('https://images.unsplash.com/photo-1600172454520-5de2a1c39d2b?auto=format&fit=crop&w=1600&q=80');
+    background-size: cover;
+    background-position: center;
+    backdrop-filter: blur(4px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.hero {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.hero h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.hero span {
+    color: #d42cc4;
+}
+
+.hero p {
+    margin-top: 10px;
+    color: #ccc;
+}
+
+/* Estilo da seção de filtro */
+.filter-section {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.filter-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filter-form label {
+    font-weight: bold;
+}
+
+.filter-form input {
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+}
+
+/* Seção da tabela */
+.table-section {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    overflow-x: auto; /* Evita quebra em telas pequenas */
+}
+
+/* Tabela */
+.table-section table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+/* Cabeçalho */
+.table-section thead tr {
+    background: linear-gradient(135deg, #ff80c0, #ff4da6);
+    color: white;
+    text-align: left;
+}
+
+.table-section th {
+    padding: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Linhas da tabela */
+.table-section td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Linhas alternadas */
+.table-section tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Efeito hover */
+.table-section tbody tr:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transition: background 0.3s ease;
+}
+
+/* Bordas arredondadas no topo */
+.table-section thead tr:first-child th:first-child {
+    border-top-left-radius: 8px;
+}
+
+.table-section thead tr:first-child th:last-child {
+    border-top-right-radius: 8px;
+}
+
+
+/* Botões */
+.btn-primary {
+    background-color: #ff66b2;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #ff4da6;
+}
+
+.btn-secondary {
+    background-color: #fff;
+    color: #ff4da6;
+    border: 2px solid #ff4da6;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #ff4da6;
+    color: white;
+}
+
+/* Card de resultados */
+.result-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.result-card {
+    background: linear-gradient(135deg, #ff80c0, #ff4da6);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 200px;
+}
+
+.result-card h3 {
+    margin-bottom: 10px;
+}
+
+.total-number {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+
+.tabela-scroll {
+    max-height: 400px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+
+.tabela-scroll table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabela-scroll thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1; 
+}
+
+/* Adaptação para Imprimir */
+@media print {
+
+    /* Oculta o menu lateral e outros elementos de navegação */
+    .sidebar,
+    .filter-section form button { 
+        display: none;
+    }
+
+
+    .main-content {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Ajusta a tabela para a largura da página */
+    .tabela-scroll {
+        max-height: none; 
+        overflow-y: visible;
+    }
+
+    /* Ajuste da tabela para a formatação de impressão */
+    .table-section table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+   
+    .table-section table thead th {
+        position: static;
+        background-color: transparent;
+        z-index: auto;
+    }
+}
