@@ -33,4 +33,4 @@ Centralize seu catálogo de serviços. Cadastre e edite facilmente cada serviço
 Analise o desempenho do seu salão e acompanhe seu crescimento. Gere relatórios detalhados dos serviços concluídos em qualquer período, como o total de 9 serviços concluídos entre 11/08/2025 e 13/08/2025. Esses relatórios fornecem uma visão clara da sua produtividade e faturamento.
 
 🛠️ Tecnologias Utilizadas
-(Adicione aqui a lista de tecnologias, como Python, Django, HTML, CSS e JavaScript)
+(Python, Django, HTML, CSS e JavaScript)
