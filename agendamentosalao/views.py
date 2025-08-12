@@ -51,6 +51,24 @@ def cadastrar_profissional(request):
         telefone = request.POST.get('telefone')
         especialidade = request.POST.get('especialidade')
 
+
+
+        # Verifica se já existe um profissional com o mesmo email
+        if Profissional.objects.filter(email=email).exists():
+            messages.error(request, 'Já existe um profissional cadastrado com este email.')
+            return redirect('cadastrar_profissional')
+        if not nome or not email or not telefone or not especialidade:
+            messages.error(request, 'Todos os campos são obrigatórios.')
+            return redirect('cadastrar_profissional')
+        # Verifica se o telefone já está cadastrado
+        if Profissional.objects.filter(telefone=telefone).exists(): 
+            messages.error(request, 'Já existe um profissional cadastrado com este telefone.')
+            return redirect('cadastrar_profissional')
+        # Verifica se o nome já está cadastrado
+        if Profissional.objects.filter(nome=nome).exists(): 
+            messages.error(request, 'Já existe um profissional cadastrado com este nome.')
+            return redirect('cadastrar_profissional')
+        
         #Criando o objeto Profissional e salvando no banco de dados
         profissional = Profissional(nome=nome, email=email, telefone=telefone, especialidade=especialidade)
         profissional.save()
@@ -114,9 +132,26 @@ def clientes(request):
 
 def cadastrar_cliente(request):
     if request.method == 'POST':
+        
         nome = request.POST.get('nome')
         telefone = request.POST.get('telefone')
         email = request.POST.get('email')
+
+        # Verifica se já existe um cliente com o mesmo email
+        if Cliente.objects.filter(email=email).exists():
+            messages.error(request, 'Já existe um cliente cadastrado com este email.')
+            return redirect('cadastrar_cliente')
+        
+        # Verifica se todos os campos foram preenchidos
+        if not nome or not telefone or not email:
+            messages.error(request, 'Todos os campos são obrigatórios.')
+            return redirect('cadastrar_cliente')
+        
+        # Verifica se o telefone já está cadastrado
+        if Cliente.objects.filter(telefone=telefone).exists():
+            messages.error(request, 'Já existe um cliente cadastrado com este telefone.')
+            return redirect('cadastrar_cliente')
+        
 
         #Criando o objeto Cliente e salvando no banco de dados
         cliente = Cliente(nome=nome, telefone=telefone, email=email)
@@ -181,6 +216,27 @@ def cadastrar_servico(request):
         descricao = request.POST.get('descricao')
         duracao_str = request.POST.get('duracao')  # Recebe como string
         preco = request.POST.get('preco')
+
+        # Verifica se já existe um serviço com o mesmo nome
+        if Servico.objects.filter(nome=nome).exists():
+            messages.error(request, 'Já existe um serviço cadastrado com este nome.')
+            return redirect('cadastrar_servico')
+        
+        # Verifica se o preço é não é vazio, zero ou é um número válido
+        try:
+            if preco == "00.00" or preco == "0.0" or preco == "0,00" or preco == "0,0":
+                messages.error(request, 'Preço inválido. Deve ser um valor maior que zero.')
+                return redirect('cadastrar_servico')
+            preco = float(preco)
+        except ValueError:
+            messages.error(request, 'Preço inválido. Deve ser um valor valido.')
+            return redirect('cadastrar_servico')
+        
+
+        # Verifica se todos os campos foram preenchidos
+        if not nome or not descricao or not duracao_str or not preco:
+            messages.error(request, 'Todos os campos são obrigatórios.')
+            return redirect('cadastrar_servico')
 
         # Converte "HH:MM:SS" para timedelta
         h, m, s = map(int, duracao_str.split(':'))

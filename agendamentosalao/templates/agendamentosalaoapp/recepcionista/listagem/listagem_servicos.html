@@ -30,8 +30,8 @@
             <a href="{% url 'servicos' %}"><i class="fas fa-scissors"></i> <span>Serviços</span></a>
             <a href="{% url 'relatorio' %}"><i class="fas fa-chart-line"></i> <span>Relatórios</span></a>
         </nav>
-        <a href="https://github.com/UalaceVGC" class="logout"><i class="fas fa-sign-out-alt"></i><img width="50" height="50" src="https://img.icons8.com/material-outlined/24/github.png" alt="github"/></a>    </aside>
-
+        <a href="https://github.com/UalaceVGC" class="logout"><i class="fas fa-sign-out-alt"></i><img width="50" height="50" src="https://img.icons8.com/material-outlined/24/github.png" alt="github"/></a>
+    </aside>
   <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-content">
         <div class="hero">
@@ -92,16 +92,7 @@
                 </tr>
                     {% empty %}
                 <tr>
-                    <td>1</td>
-                    <td>Luzes</td>
-                    <td>Aplicação de luzes no cabelo</td>
-                    <td>2H</td>
-                    <td>R$120,00</td>
-                    <td class="acoes"> 
-                        <a href="#"><img width="25" height="25" src="https://img.icons8.com/fluency-systems-regular/48/edit-user.png" alt="edit-user"/></a> 
-                        <a href="#"><img width="25" height="25" src="https://img.icons8.com/ios-filled/50/full-trash--v1.png" alt="full-trash--v1"/></a>
-                        <a href="#"><img width="25" height="25" src="https://img.icons8.com/ios/50/comments--v1.png" alt="comments--v1"/></a>
-                    </td>
+                    <td colspan="6" style="text-align:center;">Nenhum serviço cadastrado.</td>
                 </tr>
                 {% endfor %}                    
             </tbody>
