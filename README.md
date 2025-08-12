@@ -1,7 +1,5 @@
 ===💇‍♀️ Belleza Pura: Sistema de Agendamento para Salões de Beleza (SASB)===
 
-Desenvolvida para atender um desafio proposto em uma vaga para Desenvolvedor Junior Django
-
 Passo a Passo:
 
 ✅ Inicie uma Venv - Caso não saiba como iniciar uma Venv (https://oandersonbm.medium.com/usando-python-no-vs-code-com-ambiente-virtual-venv-ecef7959b652).
